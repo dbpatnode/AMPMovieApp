@@ -12,6 +12,16 @@
       content="width=device-width,minimum-scale=1,initial-scale=1"
     />
     <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script
+      async
+      custom-element="amp-list"
+      src="https://cdn.ampproject.org/v0/amp-list-0.1.js"
+    ></script>
+    <script
+      async
+      custom-template="amp-mustache"
+      src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"
+    ></script>
 
     <script
       async
@@ -93,37 +103,62 @@
       .yellowBackground {
         background-color: yellow;
       }
+
+      .input-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+
+      .input-wrapper input {
+        margin: 40px;
+        padding: 10px 20px;
+        width: 85%;
+        text-align: center;
+      }
     </style>
   </head>
 
   <body>
     <section id="amp-bind-sample">
-      <amp-state id="movies">
-        <script type="application/json">
-          {
-            "queryString": "",
-            "movies": {}
-          }
-        </script>
-      </amp-state>
+      <!-- <div> -->
+      <!-- This is the query string to hit the API -->
+      <amp-state id="movieTitle"> </amp-state>
 
-      <form
-        method="GET"
-        action="'http://www.omdbapi.com/?apikey=c2f9b89f&t='+queryString"
-        target="_top"
-      >
-        <!-- <input name="title" type="search" placeholder="Search" /> -->
-
+      <div class="input-wrapper">
+        <!-- <label>Enter Movie Title</label> -->
+        <!-- This is modifying the state -->
         <input
           id="name-input"
-          name="queryString"
-          placeholder="Enter a name"
-          on="input-throttled:AMP.setState({queryString: event.value})"
+          placeholder="Enter Movie title..."
+          on="input-throttled:AMP.setState({movieTitle: event.value})"
         />
-        <!-- <p>Hello <em data-amp-bind-text="queryString"></em>!</p> -->
+      </div>
 
-        <button type="submit">Find Movies</button>
-      </form>
+      <!-- A list that is generated from the API response using the above query string -->
+      <amp-list
+        width="auto"
+        height="500px"
+        binding="refresh"
+        single-item
+        items="."
+        [src]="'https://www.omdbapi.com/?apikey=c2f9b89f&t=' + movieTitle"
+      >
+        <!-- template mustache allows to call on the response object -->
+        <template type="amp-mustache">
+          <div class="url-entry">
+            <h1>{{Title}}</h1>
+            <amp-img
+              height="400px"
+              width="300px"
+              alt="Movie Poster"
+              [src]="'{{Poster}}'"
+            >
+            </amp-img>
+            <!-- <button>Click for more info</button> -->
+          </div>
+        </template>
+      </amp-list>
+      <!-- </div> -->
     </section>
   </body>
 </html>
