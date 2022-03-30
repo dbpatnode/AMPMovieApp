@@ -25,62 +25,14 @@
 
     <script
       async
+      custom-element="amp-accordion"
+      src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"
+    ></script>
+    <script
+      async
       custom-element="amp-bind"
       src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"
     ></script>
-    <style amp-boilerplate>
-      body {
-        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-      }
-
-      @-webkit-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-
-      @-moz-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-
-      @-ms-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-
-      @-o-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-
-      @keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-    </style>
     <noscript>
       <style amp-boilerplate>
         body {
@@ -92,31 +44,22 @@
       </style>
     </noscript>
     <style amp-custom>
-      .redBackground {
-        background-color: red;
+      body {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
       }
-
-      .greenBackground {
-        background-color: green;
+      header {
+        margin-top: 25px;
+        text-align: center;
       }
-
-      .yellowBackground {
-        background-color: yellow;
-      }
-
-      .input-wrapper {
-        display: flex;
-        justify-content: center;
-      }
-
       .input-wrapper input {
         margin: 40px;
         padding: 10px 20px;
         width: 85%;
         text-align: center;
         font-size: larger;
-        outline-color: rgb(184, 255, 251);
-        border: 2px solid lightgrey;
+        outline-color: rgb(130, 253, 247);
+        border: 2px solid rgb(184, 255, 251);
         border-radius: 5px;
       }
 
@@ -125,22 +68,52 @@
         justify-content: center;
       }
 
+      .i-amphtml-accordion-header {
+        cursor: pointer;
+        background-color: #efefef;
+        padding-right: 20px;
+        border: 1px solid #dfdfdf;
+      }
+
       .card {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 20px;
         border-radius: 5px;
         border: 2px solid lightgray;
+        margin-bottom: 30px;
+      }
+
+      .img {
+        margin-bottom: 12px;
+      }
+
+      .i-amphtml-accordion-header {
+        margin: 0 auto;
+        background-color: rgb(241, 253, 253);
+        border: 1px solid rgb(57, 252, 242);
+        padding: 20px 0;
+        width: 45%;
+      }
+
+      .details {
+        margin-top: 12px;
       }
     </style>
   </head>
 
   <body>
     <section id="amp-bind-sample">
-      <!-- <div> -->
       <!-- This is the query string to hit the API -->
       <amp-state id="movieTitle"> </amp-state>
+
+      <header>
+        <h1>MOVIE SEARCH</h1>
+      </header>
 
       <div class="input-wrapper">
         <!-- <label>Enter Movie Title</label> -->
@@ -157,9 +130,9 @@
         width="auto"
         height="100vh"
         binding="refresh"
-        single-item
-        items="."
-        [src]="'https://www.omdbapi.com/?apikey=c2f9b89f&t=' + movieTitle"
+        items="Search"
+        reset-on-refresh
+        [src]="'https://www.omdbapi.com/?apikey=c2f9b89f&s=' + movieTitle"
       >
         <!-- template mustache allows to call on the response object -->
         <template type="amp-mustache">
@@ -167,6 +140,7 @@
             <div class="card">
               <h1>{{Title}}</h1>
               <amp-img
+                class="img"
                 height="400px"
                 width="300px"
                 alt="Movie Poster"
@@ -174,14 +148,20 @@
               >
               </amp-img>
 
-              <button on="tap:movie-info.show">View Movie Details</button>
-
-              <div id="movie-info">Warning...</div>
+              <amp-accordion animate>
+                <section>
+                  <h4>Details:</h4>
+                  <p class="details">
+                    <b>Year:</b> {{Year}}<br />
+                    <b>Type:</b> {{Type}} <br />
+                    <a href="https://www.imdb.com/title/{{imdbID}}">IMDB</a>
+                  </p>
+                </section>
+              </amp-accordion>
             </div>
           </div>
         </template>
       </amp-list>
-      <!-- </div> -->
     </section>
   </body>
 </html>
