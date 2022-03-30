@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html ⚡>
+  <head>
+    <meta charset="utf-8" />
+    <title>amp-bind</title>
+    <link
+      rel="canonical"
+      href="https://ampbyexample.com/components/amp-bind/"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1,initial-scale=1"
+    />
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    <script
+      async
+      custom-element="amp-bind"
+      src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"
+    ></script>
+    <style amp-boilerplate>
+      body {
+        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+      }
+
+      @-webkit-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+
+      @-moz-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+
+      @-ms-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+
+      @-o-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+
+      @keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+    </style>
+    <noscript>
+      <style amp-boilerplate>
+        body {
+          -webkit-animation: none;
+          -moz-animation: none;
+          -ms-animation: none;
+          animation: none;
+        }
+      </style>
+    </noscript>
+    <style amp-custom>
+      .redBackground {
+        background-color: red;
+      }
+
+      .greenBackground {
+        background-color: green;
+      }
+
+      .yellowBackground {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section id="amp-bind-sample">
+      <amp-state id="movies">
+        <script type="application/json">
+          {
+            "queryString": "",
+            "movies": {}
+          }
+        </script>
+      </amp-state>
+
+      <form
+        method="GET"
+        action="'http://www.omdbapi.com/?apikey=c2f9b89f&t='+queryString"
+        target="_top"
+      >
+        <!-- <input name="title" type="search" placeholder="Search" /> -->
+
+        <input
+          id="name-input"
+          name="queryString"
+          placeholder="Enter a name"
+          on="input-throttled:AMP.setState({queryString: event.value})"
+        />
+        <!-- <p>Hello <em data-amp-bind-text="queryString"></em>!</p> -->
+
+        <button type="submit">Find Movies</button>
+      </form>
+    </section>
+  </body>
+</html>
