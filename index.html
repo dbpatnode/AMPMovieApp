@@ -2,7 +2,7 @@
 <html ⚡>
   <head>
     <meta charset="utf-8" />
-    <title>amp-bind</title>
+    <title>Movie Search</title>
     <link
       rel="canonical"
       href="https://ampbyexample.com/components/amp-bind/"
@@ -114,6 +114,24 @@
         padding: 10px 20px;
         width: 85%;
         text-align: center;
+        font-size: larger;
+        outline-color: rgb(184, 255, 251);
+        border: 2px solid lightgrey;
+        border-radius: 5px;
+      }
+
+      .url-entry {
+        display: flex;
+        justify-content: center;
+      }
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 5px;
+        border: 2px solid lightgray;
       }
     </style>
   </head>
@@ -129,7 +147,7 @@
         <!-- This is modifying the state -->
         <input
           id="name-input"
-          placeholder="Enter Movie title..."
+          placeholder="Enter movie title..."
           on="input-throttled:AMP.setState({movieTitle: event.value})"
         />
       </div>
@@ -137,7 +155,7 @@
       <!-- A list that is generated from the API response using the above query string -->
       <amp-list
         width="auto"
-        height="500px"
+        height="100vh"
         binding="refresh"
         single-item
         items="."
@@ -146,15 +164,20 @@
         <!-- template mustache allows to call on the response object -->
         <template type="amp-mustache">
           <div class="url-entry">
-            <h1>{{Title}}</h1>
-            <amp-img
-              height="400px"
-              width="300px"
-              alt="Movie Poster"
-              [src]="'{{Poster}}'"
-            >
-            </amp-img>
-            <!-- <button>Click for more info</button> -->
+            <div class="card">
+              <h1>{{Title}}</h1>
+              <amp-img
+                height="400px"
+                width="300px"
+                alt="Movie Poster"
+                [src]="'{{Poster}}'"
+              >
+              </amp-img>
+
+              <button on="tap:movie-info.show">View Movie Details</button>
+
+              <div id="movie-info">Warning...</div>
+            </div>
           </div>
         </template>
       </amp-list>
